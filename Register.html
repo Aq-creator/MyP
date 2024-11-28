@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Register.css">
+    <title>Register</title>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register</h2>
+        <form action="SRegister.php" method="post" class="registration-form">
+            <div class="input-group">
+                <label for="full_name">Full Name (Last, First MI.):</label>
+                <input type="text" name="full_name" placeholder="Last, First M." required>
+            </div>
+
+            <div class="input-group">
+                <label for="address">Address:</label>
+                <input type="text" name="address" placeholder="Street, Block, City" required>
+            </div>
+
+            <div class="input-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" name="phone" placeholder="09000000000" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|addu\.edu\.ph)$" placeholder="example@gmail.com" required>
+                <small style="color: #ccc; font-size: 12px;">
+                    * Must be a valid email ending with @gmail.com or @addu.edu.ph
+                </small>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class="input-group">
+                <label for="retype_password">Retype Password:</label>
+                <input type="password" name="retype_password" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- JavaScript for Client-side Validation -->
+    <script>
+        document.querySelector('.registration-form').addEventListener('submit', function(e) {
+            const form = e.target;
+            const fullName = form.querySelector('[name="full_name"]').value.trim();
+            const phone = form.querySelector('[name="phone"]').value.trim();
+            const email = form.querySelector('[name="email"]').value.trim();
+            const address = form.querySelector('[name="address"]').value.trim();
+            const password = form.querySelector('[name="password"]').value.trim();
+            const retypePassword = form.querySelector('[name="retype_password"]').value.trim();
+
+            // Regular expressions
+            const fullNamePattern = /^[a-zA-Z]+,\s[a-zA-Z]+\s[a-zA-Z]\.$/;
+            const phonePattern = /^09\d{9}$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|addu\.edu\.ph)$/;
+            const addressPattern = /^(\d+\s)?[A-Za-z\s]+\sSt\.,\s(\d+\s)?[A-Za-z0-9\s]+,\s[A-Za-z\s]+$/;
+
+            // Validate full name
+            if (!fullNamePattern.test(fullName)) {
+                alert("You must follow the valid format for Full Name: Last, First M.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validate phone number
+            if (!phonePattern.test(phone)) {
+                alert("You must follow the valid format for Phone Number: 11 digits starting with 09.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validate email
+            if (!emailPattern.test(email)) {
+                alert("Invalid email format! Please use an email ending with @gmail.com or @addu.edu.ph.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validate address
+            if (!addressPattern.test(address)) {
+                alert("Address must follow the format: # Text St., Block or Text, City Name.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validate passwords
+            if (password !== retypePassword) {
+                alert("Passwords do not match!");
+                e.preventDefault();
+                return;
+            }
+        });
+    </script>
+</body>
+</html>
